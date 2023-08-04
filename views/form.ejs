@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>blog form</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+    <body>
+      <nav>
+        <h4>Blog CRUD</h4>
+        <ul>
+          <li><a href='/'>Home</a></li>
+          <li><a href='/blog'>Blogs</a></li>
+          <li><a href='/page/form'>Register</a></li>
+          <li><a href='/table'>Table</a></li>
+        </ul>
+      </nav>
+
+      <div class="conatiner-mt4">
+        <form action="/form/add" method="POST">
+          <div class="mb-3">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title">
+          </div>
+
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="text" class="form-control" name="date">
+          </div>
+
+          <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea cols="10" rows="6" class="form-control" name="content"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </body>
+</html>

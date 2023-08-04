@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>blog node</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/style.css">
+    </head>
+
+    <body>
+        <nav>
+			<h4>Blog CRUD</h4>
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='/blog'>Blogs</a></li>
+				<li><a href='/page/form'>Register</a></li>
+                <li><a href='/table'>Table</a></li>
+			</ul>
+		</nav>
+        
+        <div class="container d-flex flex-wrap mt-4">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% if (data.length) { for(var i = 0; i< data.length; i++) {%>
+                    <tr>
+                        <th scope="row"><%= data[i].ID %></th>
+                        <td><%= data[i].title %></td>
+                        <td><%= data[i].content %></td>
+                        <td><%= data[i].date %></td>
+                        <td><a class="btn btn-primary" href="form/<%= data[i].ID %>">Edit</a></td>
+                        <td><a class="btn btn-danger">Delete</a></td>
+                    </tr>
+                    <% }}else{ %>
+                    <tr>
+                        <td>No data from database</td>
+                    </tr>
+                </tbody>
+            </table>
+                    <% } %>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
