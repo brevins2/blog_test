@@ -19,7 +19,7 @@
       </nav>
 
       <div class="conatiner-mt4">
-        <form action="/form/:id" method="POST">
+        <form action="/edit-form/<%= locals.id %>" method="POST">
           <div class="mb-3">
             <label for="title">Title</label>
             <input type="text" class="form-control" name="title" value="<%= locals.title %>">
@@ -32,7 +32,7 @@
 
           <div class="mb-3">
             <label for="content" class="form-label">Content</label>
-            <textarea cols="10" rows="6" class="form-control" name="content" value="<%= locals.content %>"></textarea>
+            <textarea cols="10" rows="6" class="form-control" name="content"><%= locals.content %></textarea>
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>

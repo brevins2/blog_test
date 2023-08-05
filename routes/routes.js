@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 	res.render('main');
 });
 
-// blogs
+// calling all blogs for displaying
 router.get('/blog', (req, res) => {
     db.query('SELECT * FROM blogs ORDER BY ID asc', (err, rows) => {
         if(err) {
@@ -30,10 +30,12 @@ router.get('/blog', (req, res) => {
     })
 })
 
+// calling the form page to adding data
 router.get('/page/form', (req, res) => {
     res.render('form')
 })
 
+// inserting data into the database
 router.post('/form/add', (req, res) => {
     isValid = true
     
@@ -54,58 +56,57 @@ router.post('/form/add', (req, res) => {
     }
 })
 
-router.route('/form/:id')
-.get((req, res) => {
+// getting data to be edited
+router.get('/form/:id', (req, res) => {
     isValid = true
     
     if(isValid){        
         db.query(`SELECT * FROM blogs WHERE ID = '${req.params.id}'`, (err, result) => {
-            if(err) throw err
-            // console.log(result)
-            res.render('update', { title: result.title, date: result.date, content: result.content })
+            const id = req.params.id
+            let i = result
+            i.forEach((element) => {
+                if(err) throw err
+                res.render('update', { title: element['title'], date: element['date'], content: element['content'], id })
+            });
         })
     }
     else {
         console.log('error happened')
         res.send('NO SUCH DATA <a href="/blog/"><- back</a>')
     }
-}).put((req, res) => {
-    isValid = true
-    
-    if(isValid){
-        const title = req.body.title
-        const date = req.body.date
-        const content = req.body.content
+})
 
-        db.query(`UPDATE blogs SET title = '${title}', date = '${date}', content = '${content}' WHERE ID = '${req.params.id}'`, (err, result) => {
-            if(err) throw err
-            console.log(result)
-        })
-        res.redirect('/blog')
-    }
-    else {
-        console.log('error happened')
-        res.send('data not update. <a href="/b/"><-- go back</a>')
-    }
-}).delete((req, res) => {
-    res.send(`delete form with ID ${req.params.id}`)
+// editing data in database
+router.post('/edit-form/:id', (req, res) => {    
+    const data = req.body
+    const id = req.params.id
+
+    db.query(`UPDATE blogs SET ? WHERE ID = ?`, [ data, id ], (err, result) => {
+        if(err) throw err
+        console.log('results are '+result)
+    })
+    res.redirect('/table')
+})
+
+// deleting data from database
+router.get('/delete-form/:id', (req, res) => {
+    // res.render('delete', {id: req.params.id})
+
     isValid = true
     
     if(isValid){
-        db.query('DELETE FROM blogs WHERE ID = ' + req.params.id, (err, result) => {
+        db.query(`DELETE FROM blogs WHERE ID = '${req.params.id}'`, req.params.id, (err, result) => {
             if(err) throw err
-            console.log(result)
         })
-        res.redirect('/b/blog')
+        res.redirect('/table')
     }
     else {
         console.log('error happened')
-        res.send('data invalid not not added. <a href="/b/"><-- go back</a>')
-        res.redirect('/b/')
+        res.send('data invalid not not added. <a href="/table"><-- go back</a>')
     }
 })
 
-// table
+// calling table page.
 router.get('/table', (req, res) => {
     db.query('SELECT * FROM blogs ORDER BY ID asc', (err, rows) => {
         if(err) {
@@ -116,15 +117,6 @@ router.get('/table', (req, res) => {
             res.render('table', { data: rows })
         }
     })
-})
-
-// edits
-router.get('/:id', (req, res) => {
-    isValid = true
-    if(isValid) {
-        req.query('SELECT * FROM blog WHERE ')
-    }
-    res.render('update')
 })
 
 module.exports = router;
